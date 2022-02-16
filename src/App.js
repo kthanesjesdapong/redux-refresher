@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, incrementByAmount, decrementByAmount } from "./redux/counter";
+import "./styles.css";
 
-function App() {
+export default function App() {
+  const { count } = useSelector((state) => state.counter);
+
+  //useSelector is going to be replace our state, what we're saying here is we want to read this variable from this reducer
+
+  const dispatch = useDispatch();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> The count is: {count}</h1>
+      <button onClick={() => dispatch(increment())}>increment</button>
+      <button onClick={() => dispatch(decrement())}>decrement</button>
+      <button onClick={() => dispatch(incrementByAmount(10))}>
+        Increment by 10
+      </button>
+      <button onClick={() => dispatch(decrementByAmount(10))}>
+        Decrement by 10</button>
     </div>
   );
 }
 
-export default App;
+/*
+to call an action from our reducer we have to use the useDispatch Hook
+
+now just pass in our action from our reducer within the dispatch
+
+
+within our incrementByAmount remember we passed in action as well? we can make that either a value / object
+  and so when we pass in 10 we are incrementing/decrementing by that amount (10 is the payload)
+
+*/
